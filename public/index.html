@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Kart - Your Online Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#home" class="logo" onclick="showPage('home')">E-Kart</a>
+        <div class="nav-links">
+            <a href="#home" onclick="showPage('home')">Home</a>
+            <a href="#products" onclick="showPage('products')">Products</a>
+            <span id="user-greeting" style="display: none; color: white; margin-right: 10px;"></span>
+            <a href="#login" onclick="showPage('login')" id="nav-login">Login</a>
+            <a href="#signup" onclick="showPage('signup')" id="nav-signup">Sign Up</a>
+            <div class="cart-icon hidden" id="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+            <button class="btn-orders" id="nav-orders" onclick="showOrderHistory()" style="display: none;">📦 My Orders</button>
+            <a href="#" id="nav-logout" onclick="logout()" style="display: none;">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <section id="home" class="page">
+        <div class="hero">
+            <h1>Welcome to E-Kart</h1>
+            <p>Your one-stop shop for everything you need</p>
+            <button class="btn btn-primary" onclick="handleShopNow()">Shop Now</button>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <img src="images/features/shipping.jpg" alt="Free Shipping" class="feature-icon" onerror="this.style.display='none'; this.nextElementSibling.textContent='🚚'">
+                <h3>Free Shipping</h3>
+                <p>On orders over $50</p>
+            </div>
+            <div class="feature-card">
+                <img src="images/features/secure.jpg" alt="Secure Payment" class="feature-icon" onerror="this.style.display='none'; this.nextElementSibling.textContent='🛡️'">
+                <h3>Secure Payment</h3>
+                <p>100% secure transactions</p>
+            </div>
+            <div class="feature-card">
+                <img src="images/features/returns.jpg" alt="Easy Returns" class="feature-icon" onerror="this.style.display='none'; this.nextElementSibling.textContent='↩️'">
+                <h3>Easy Returns</h3>
+                <p>30-day return policy</p>
+            </div>
+            <div class="feature-card">
+                <img src="images/features/support.jpg" alt="24/7 Support" class="feature-icon" onerror="this.style.display='none'; this.nextElementSibling.textContent='📞'">
+                <h3>24/7 Support</h3>
+                <p>We are here to help</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Page -->
+    <section id="products" class="page" style="display: none;">
+        <div class="products-container">
+            <div class="products-header">
+                <h1>Our Products</h1>
+                <p>Browse our latest collection</p>
+            </div>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section id="login" class="page" style="display: none;">
+        <div class="auth-container">
+            <div class="form-box">
+                <h2>Welcome Back</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                </form>
+                <div class="form-switch">
+                    Don't have an account? <a onclick="showPage('signup')">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Page -->
+    <section id="signup" class="page" style="display: none;">
+        <div class="auth-container">
+            <div class="form-box">
+                <h2>Create Account</h2>
+                <form id="signupForm">
+                    <div class="input-group">
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                </form>
+                <div class="form-switch">
+                    Already have an account? <a onclick="showPage('login')">Login here</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <p style="text-align: center; color: #666;">Your cart is empty</p>
+            </div>
+            <div class="cart-total">
+                <div class="cart-summary">
+                    <p>Total Items: <span id="cart-items-count">0</span></p>
+                    <h3>Total Price: $<span id="cart-total">0.00</span></h3>
+                </div>
+                <button class="btn-checkout" onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order History Modal -->
+    <div class="order-history-modal" id="order-history-modal">
+        <div class="order-history-content">
+            <div class="order-history-header">
+                <h2>My Order History</h2>
+                <button class="close-orders" onclick="toggleOrderHistory()">×</button>
+            </div>
+            <div class="order-history-items" id="order-history-items">
+                <p style="text-align: center; color: #666;">No orders yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
